@@ -1,935 +1,619 @@
-<!--Navegacion de escritorio-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Jimmy</title>
-    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- SEO: descripción visible en Google y al compartir el link -->
+    <meta name="description" content="Portfolio de Jimmy Cabalceta Alpizar, Estudiante de Ingeniería Informática en Costa Rica. Proyectos de desarrollo web, .NET y diseño UI/UX.">
+
+    <!-- Open Graph: previsualización al compartir en redes sociales -->
+    <meta property="og:title"       content="Portfolio | Jimmy Cabalceta">
+    <meta property="og:description" content="Desarrollador web y estudiante de Ingeniería Informática en Costa Rica.">
+    <meta property="og:type"        content="website">
+
+    <title>Portfolio | Jimmy Cabalceta</title>
+
+    <!-- Fuente Poppins desde Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Iconos Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Tailwind CSS para utilidades de layout (clases como flex, grid, px-6, etc.) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-
-
+    <!-- Estilos personalizados (carga después de Tailwind para poder sobreescribir) -->
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    
-<header>
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center py-4">
-      
-      <!-- Logo o nombre -->
-      <div class="text-white text-xl font-bold"></div>
-
-      <!-- Navegación escritorio -->
-      <div class="hidden md:flex space-x-4">
-        <a href="#projects" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Proyectos</a>
-        <a href="#skills" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Habilidades</a>
-        <a href="#education" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Educación</a>
-        <a href="#certifications" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Certificaciones</a>
-      </div>
-
-      <!-- Botón menú móvil -->
-      <div class="md:hidden">
-        <button id="menu_toggle" class="text-gray-300 hover:text-white focus:outline-none">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Menú móvil -->
-    <div id="mobile_menu" class="hidden flex-col mt space-y-2 px-4 pb-4">
-      <a href="#projects" class="text-gray-300 hover:text-white">Proyectos</a>
-      <a href="#skills" class="text-gray-300 hover:text-white">Habilidades</a>
-      <a href="#education" class="text-gray-300 hover:text-white">Educación</a>
-      <a href="#certifications" class="text-gray-300 hover:text-white">Certificaciones</a>
-    </div>
-  </nav>
 
 
+<!-- =====================================================
+     NAVBAR PRINCIPAL
+     Es fija en la pantalla (fixed). Al hacer scroll
+     adquiere un efecto de vidrio esmerilado con JS.
+     ===================================================== -->
+<header id="navbar" class="fixed w-full top-0 z-50 navbar-glass">
+    <nav class="px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+
+            <!-- Logo / nombre del portfolio -->
+            <a href="#home" class="logo-text text-lg font-bold">
+                <span class="text-indigo-500">&lt;</span>
+                <span class="text-white">JCA</span>
+                <span class="text-indigo-500">/&gt;</span>
+            </a>
+
+            <!-- Navegación escritorio (oculta en móvil con hidden md:flex) -->
+            <div class="hidden md:flex space-x-1">
+                <a href="#projects"       class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-md">Proyectos</a>
+                <a href="#skills"         class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-md">Habilidades</a>
+                <a href="#education"      class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-md">Educación</a>
+                <a href="#certifications" class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-md">Certificaciones</a>
+                <a href="#contact"        class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-md">Contacto</a>
+            </div>
+
+            <!-- Botón hamburguesa (solo visible en móvil) -->
+            <button id="menu_toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none" aria-label="Abrir menú">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menú desplegable móvil (oculto por defecto, JS lo muestra/oculta) -->
+        <div id="mobile_menu" class="hidden flex-col space-y-1 px-4 pb-4 md:hidden">
+            <a href="#projects"       class="mobile-nav-link text-gray-300 hover:text-white py-2 block">Proyectos</a>
+            <a href="#skills"         class="mobile-nav-link text-gray-300 hover:text-white py-2 block">Habilidades</a>
+            <a href="#education"      class="mobile-nav-link text-gray-300 hover:text-white py-2 block">Educación</a>
+            <a href="#certifications" class="mobile-nav-link text-gray-300 hover:text-white py-2 block">Certificaciones</a>
+            <a href="#contact"        class="mobile-nav-link text-gray-300 hover:text-white py-2 block">Contacto</a>
+        </div>
+    </nav>
 </header>
 
 
+<!-- =====================================================
+     SECCIÓN HERO (Pantalla de inicio)
+     Fondo con partículas animadas mediante Canvas.
+     El nombre tiene efecto typewriter (escritura).
+     ===================================================== -->
+<section id="home" class="hero-section relative min-h-screen flex items-center overflow-hidden">
 
-<!-- Seccion de inicio -->
+    <!-- Canvas de fondo: JS dibuja puntos conectados que reaccionan al ratón -->
+    <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
 
-<section id="home" class="section min-h-screen flex items-center">
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="flex flex-col md:flex-row items-center gap-12">
 
-    <div class="container mx-auto px-6">
-
-        <div class="flex flex-col md:flex-row items-center">
-
-            <div class="md:w-1/2 mb-10 md:mb-0">
-
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hola, soy <span class="text-indigo-500 typing-text" id="name">Jimmy Cabalceta</span></h1>
-
-                <h2 class="text-2xl md:text-3xl text-gray-400 mb-6">Estudiante de Ingenieria Informática</h2>
-
-                <p class="text-lg text-gray-300 mb-8">Desarrollador enfocado en crear experiencias digitales modernas y funcionales.</p>
-
-                <div class="flex space-x-4">
-
-                    <a href="#projects" class="btn-primary px-8 py-3 rounded-lg text-white font-medium">Ver Proyectos</a>
-
-                </div>
-
-            </div>
-
-            <div class="md:w-1/2 flex justify-center">
-
-                <div class="relative w-64 h-64 md:w-80 md:h-80">
-
-                    <div class="absolute inset-0 rounded-full bg-indigo-500 opacity-25 animate-pulse"></div>
-
-                    <div class="absolute inset-1 rounded-full bg-gray-800 flex items-center justify-center overflow-hidden">
-
-                        <!-- Reemplazar con tu foto o mantener el avatar -->
-
-                        <img src="/img/jimmy_perfil_circulo.png" alt="JimmyPerfilCirculo">
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- About Section -->
-
-<section id="about" class="section bg-gray-900">
-
-    <div class="container mx-auto px-6">
-
-        <h2 class="section-title text-3xl font-bold">Sobre Mí</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-
-            <div>
-
-                <p class="text-gray-300 mb-6">
-
-                    Soy un Ingeniero Informático con experiencia en desarrollo de software y interesado en crear soluciones tecnológicas innovadoras. Mi enfoque se centra en escribir código limpio y eficiente para resolver problemas.
-
+            <!-- Bloque de texto principal -->
+            <div class="md:w-1/2 hero-text">
+                <p class="text-indigo-400 font-medium mb-3 tracking-widest uppercase text-sm">Bienvenido a mi portfolio</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    Hola, soy<br>
+                    <!-- El nombre tiene un gradiente animado -->
+                    <span class="gradient-text">Jimmy Cabalceta</span>
+                </h1>
+                <!-- El rol cambia automáticamente: JS escribe y borra el texto -->
+                <h2 class="text-2xl md:text-3xl text-gray-400 mb-6 h-10">
+                    <span id="typewriter-text"></span><span class="typewriter-cursor">|</span>
+                </h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    Desarrollador enfocado en crear experiencias digitales modernas y funcionales.
                 </p>
-
-                <p class="text-gray-300 mb-6">
-
-                    A lo largo de mi carrera, he trabajado en diversos proyectos que me han permitido desarrollar habilidades técnicas sólidas y una comprensión profunda de los principios de la ingeniería de software. Me especializo en desarrollo web y aplicaciones móviles, con un fuerte interés en la inteligencia artificial y el aprendizaje automático.
-
-                </p>
-
-                <!-- <p class="text-gray-300">
-
-                    Cuando no estoy programando, disfruto de [tus hobbies o intereses], lo que me ayuda a mantener un equilibrio y aportar perspectivas frescas a mi trabajo.
-
-                </p> -->
-
-            </div>
-
-            <div>
-
-                <h3 class="text-xl font-semibold mb-4 text-indigo-400">Información Personal</h3>
-
-                <ul class="space-y-4">
-
-                    <li class="flex items-center">
-
-                        <span class="text-indigo-500 mr-3"><i class="fas fa-user"></i></span>
-
-                        <div>
-
-                            <span class="text-gray-400">Nombre:</span>
-
-                            <span class="text-gray-300 ml-2">Jimmy Cabalceta Alpizar</span>
-
-                        </div>
-
-                    </li>
-
-                    <li class="flex items-center">
-
-                        <span class="text-indigo-500 mr-3"><i class="fas fa-envelope"></i></span>
-
-                        <div>
-
-                            <span class="text-gray-400">Email:</span>
-
-                            <span class="text-gray-300 ml-2">jimmycabalz.a.2011@gmail.com</span>
-
-                        </div>
-
-                    </li>
-
-                    <li class="flex items-center">
-
-                        <span class="text-indigo-500 mr-3"><i class="fas fa-map-marker-alt"></i></span>
-
-                        <div>
-
-                            <span class="text-gray-400">Ubicación:</span>
-
-                            <span class="text-gray-300 ml-2">Costa Rica, San Jose</span>
-
-                        </div>
-
-                    </li>
-
-                    <li class="flex items-center">
-
-                        <span class="text-indigo-500 mr-3"><i class="fas fa-graduation-cap"></i></span>
-
-                        <div>
-
-                            <span class="text-gray-400">Título:</span>
-
-                            <span class="text-gray-300 ml-2">Ingeniero Informático</span>
-
-                        </div>
-
-                    </li>
-
-                    <!-- <li class="flex items-center">
-
-                        <span class="text-indigo-500 mr-3"><i class="fas fa-briefcase"></i></span>
-
-                        <div>
-
-                            <span class="text-gray-400">Experiencia:</span>
-
-                            <span class="text-gray-300 ml-2">X años</span>
-
-                        </div>
-
-                    </li> -->
-
-                </ul>
-
-                <div class="mt-8">
-
-                    <a href="#contact" id="btn-contactame"  class="btn-primary px-6 py-2 rounded-lg text-white font-medium inline-flex items-center">
-
-                        <i class="fas fa-paper-plane mr-2"></i> Contáctame
-
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects" class="btn-primary px-8 py-3 rounded-lg text-white font-medium inline-flex items-center gap-2">
+                        <i class="fas fa-rocket"></i> Ver Proyectos
                     </a>
-
+                    <a href="#contact" class="btn-outline px-8 py-3 rounded-lg text-white font-medium inline-flex items-center gap-2">
+                        <i class="fas fa-paper-plane"></i> Contáctame
+                    </a>
                 </div>
-
             </div>
 
-
+            <!-- Foto de perfil con anillo giratorio y flotación -->
+            <div class="md:w-1/2 flex justify-center hero-profile">
+                <div class="profile-container relative w-64 h-64 md:w-80 md:h-80">
+                    <!-- Capa 1: aura pulsante exterior -->
+                    <div class="absolute inset-0 rounded-full bg-indigo-500 opacity-20 animate-pulse"></div>
+                    <!-- Capa 2: anillo con gradiente cónico giratorio -->
+                    <div class="absolute inset-2 rounded-full ring-spin"></div>
+                    <!-- Capa 3: foto de perfil -->
+                    <div class="absolute inset-4 rounded-full bg-gray-800 overflow-hidden">
+                        <img src="/img/jimmy_perfil_circulo.png" alt="Foto de perfil de Jimmy Cabalceta" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 
+    <!-- Indicador "baja la página" con animación de rueda -->
+    <div class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <div class="scroll-mouse">
+            <div class="scroll-wheel"></div>
+        </div>
+    </div>
 </section>
 
-<!-- Projects Section -->
+
+<!-- =====================================================
+     SECCIÓN SOBRE MÍ
+     ===================================================== -->
+<section id="about" class="section bg-gray-900">
+    <div class="container mx-auto px-6">
+        <h2 class="section-title text-3xl font-bold reveal">Sobre Mí</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+            <!-- Descripción personal -->
+            <div class="reveal reveal-left">
+                <p class="text-gray-300 mb-6">
+                    Soy un estudiante de Ingeniería Informática con experiencia práctica en desarrollo de software, especializado en crear soluciones tecnológicas limpias y eficientes.
+                </p>
+                <p class="text-gray-300">
+                    He trabajado en proyectos que van desde aplicaciones móviles con pagos en línea hasta plataformas de comercio electrónico y aplicaciones web. Me especializo en desarrollo .NET y web, con fuerte interés en diseño UI/UX.
+                </p>
+            </div>
+
+            <!-- Datos personales -->
+            <div class="reveal reveal-right">
+                <h3 class="text-xl font-semibold mb-5 text-indigo-400">Información Personal</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3">
+                        <span class="text-indigo-500 w-5 text-center"><i class="fas fa-user"></i></span>
+                        <span class="text-gray-400">Nombre:</span>
+                        <span class="text-gray-300 ml-1">Jimmy Cabalceta Alpizar</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-indigo-500 w-5 text-center"><i class="fas fa-envelope"></i></span>
+                        <span class="text-gray-400">Email:</span>
+                        <span class="text-gray-300 ml-1">jimmycabalz.a.2011@gmail.com</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-indigo-500 w-5 text-center"><i class="fas fa-map-marker-alt"></i></span>
+                        <span class="text-gray-400">Ubicación:</span>
+                        <span class="text-gray-300 ml-1">Costa Rica, San José</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-indigo-500 w-5 text-center"><i class="fas fa-graduation-cap"></i></span>
+                        <span class="text-gray-400">Título:</span>
+                        <span class="text-gray-300 ml-1">Ingeniería Informática (en curso)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     SECCIÓN PROYECTOS
+     Las tarjetas aparecen con retraso escalonado
+     usando la variable CSS --reveal-delay.
+     ===================================================== -->
 <section id="projects" class="section">
     <div class="container mx-auto px-6">
-        <h2 class="section-title text-3xl font-bold">Proyectos Destacados</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            <!-- Project 1 -->
-            <div class="project-card rounded-lg overflow-hidden">
-                <div class="bg-gray-700 flex items-center justify-center">
-                    <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                        <source src="/assets/VideoCortoTeslaApp.mp4" type="video/mp4" />
+        <h2 class="section-title text-3xl font-bold reveal">Proyectos Destacados</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Proyecto 1: App Tesla -->
+            <div class="project-card rounded-lg overflow-hidden reveal" style="--reveal-delay: 0ms">
+                <div class="project-media bg-gray-700">
+                    <video autoplay muted loop playsinline>
+                        <source src="/assets/VideoCortoTeslaApp.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Aplicacion de venta de autos Tesla</h3>
-                    <p class="text-gray-400 mb-4">Aplicacion movil para la compra de autos Tesla, con pagos en linea y verificacion al correo.
-                                                    Incluye un sistema de autenticacion y registro de usuarios y una gestion administrativa</p>
+                    <h3 class="text-xl font-bold mb-2">App de venta de autos Tesla</h3>
+                    <p class="text-gray-400 mb-4">Aplicación móvil para comprar autos Tesla con pagos en línea, verificación por correo, autenticación de usuarios y panel administrativo.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">C#</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">.NET</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">Firebase</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">Figma</span>
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">.NET</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">Figma</span>
                     </div>
-                    <div class="flex space-x-3">
-                        <a href="https://github.com/Nserial-killa/TeslaAppMovilFinal2.0" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <i class="fab fa-github mr-1"></i> Repositorio
+                    <div class="flex gap-4">
+                        <a href="https://github.com/Nserial-killa/TeslaAppMovilFinal2.0" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Repositorio
                         </a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Project 2 -->
-            <div class="project-card rounded-lg overflow-hidden">
-                <div class="bg-gray-700 flex items-center justify-center">
-                    <img src="/assets/MyEducInicio.png" alt="CanvaInicio" class="max-w-full max-h-full object-contain shadow-md">
+
+            <!-- Proyecto 2: Diseño MyEduc -->
+            <div class="project-card rounded-lg overflow-hidden reveal" style="--reveal-delay: 100ms">
+                <div class="project-media bg-gray-700">
+                    <img src="/assets/MyEducInicio.png" alt="Diseño de interfaz MyEduc">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Diseño de interfaz de usuario para sitio web</h3>
-                    <p class="text-gray-400 mb-4">Diseño de una interfaz de usuario moderna y satisfactoria para la vista del usuario
-                                                  para un sitio web informativo sobre cursos en linea de distintas areas.
-                    </p>
+                    <h3 class="text-xl font-bold mb-2">Diseño de interfaz para sitio educativo</h3>
+                    <p class="text-gray-400 mb-4">Interfaz moderna para un sitio web informativo sobre cursos en línea de distintas áreas.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">Canva</span>
+                        <span class="tech-tag">Canva</span>
                     </div>
-                    <div class="flex space-x-3">
-                        <a href="https://ejemplowebsitemio.my.canva.site/myeduc" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <img src="/assets/canva-icon-logo-symbol-free-png.png" alt="canvaIcon"  width="60" class="w-8 h-8 mr-1">Canva</a>
-                        
+                    <div class="flex gap-4">
+                        <a href="https://ejemplowebsitemio.my.canva.site/myeduc" target="_blank" class="project-link">
+                            <img src="/assets/canva-icon-logo-symbol-free-png.png" alt="Canva" class="w-4 h-4 inline-block"> Ver en Canva
+                        </a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Project 3 -->
-            <div class="project-card rounded-lg overflow-hidden">
-                <div class="bg-gray-700 flex items-center justify-center">
-                    <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                        <source src="/assets/laschemasdelmapa.mp4" type="video/mp4" />
+
+            <!-- Proyecto 3: Tienda de camisas -->
+            <div class="project-card rounded-lg overflow-hidden reveal" style="--reveal-delay: 200ms">
+                <div class="project-media bg-gray-700">
+                    <video autoplay muted loop playsinline>
+                        <source src="/assets/laschemasdelmapa.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Tienda de Camisas Online</h3>
-                    <p class="text-gray-400 mb-4">Las chemas del mapa es una plataforma de comercio electrónico especializada en la venta de camisetas de fútbol (actual y retro), así como de la NBA, NFL, MLB y Fórmula 1. El proyecto se desarrolla utilizando tecnologías web modernas como HTML, CSS (Tailwind CSS y Bootstrap) y JavaScript.</p>
+                    <h3 class="text-xl font-bold mb-2">Las Chemas del Mapa – Tienda Online</h3>
+                    <p class="text-gray-400 mb-4">Plataforma de e-commerce para camisetas de fútbol (actual y retro), NBA, NFL, MLB y F1, construida con HTML, Tailwind CSS y JavaScript.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">HTML</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">CSS</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">JS</span>
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
                     </div>
-                    <div class="flex space-x-3">
-                        <a href="https://github.com/Nserial-killa/LCDM.final" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <i class="fab fa-github mr-1"></i> Repositorio
+                    <div class="flex gap-4">
+                        <a href="https://github.com/Nserial-killa/LCDM.final" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Repositorio
                         </a>
-
-                        <a href="https://laschemasdelmapa.com/" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <i class="fa-solid fa-eye mr-1 "></i> Sitio Web
+                        <a href="https://laschemasdelmapa.com/" target="_blank" class="project-link">
+                            <i class="fa-solid fa-eye"></i> Sitio Web
                         </a>
-                        
                     </div>
                 </div>
             </div>
 
-
-            <!-- Project 4 -->
-            <div class="project-card rounded-lg overflow-hidden">
-                <div class="bg-gray-700 flex items-center justify-center">
-                    <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                        <source src="/assets/PokeApi.mp4" type="video/mp4" />
+            <!-- Proyecto 4: PokéDex -->
+            <div class="project-card rounded-lg overflow-hidden reveal" style="--reveal-delay: 300ms">
+                <div class="project-media bg-gray-700">
+                    <video autoplay muted loop playsinline>
+                        <source src="/assets/PokeApi.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="p-6">
                     <h3 class="text-xl font-bold mb-2">PokéDex Web</h3>
-                    <p class="text-gray-400 mb-4">Una aplicación web para explorar información sobre la Primera Generación de Pokémon, usando la API de PokeAPI, construida con tecnologías modernas como HTML, CSS, JavaScript.</p>
+                    <p class="text-gray-400 mb-4">Aplicación web para explorar la Primera Generación de Pokémon usando la PokéAPI, construida con HTML, CSS y JavaScript.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">HTML</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">CSS</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">JS</span>
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
                     </div>
-                    <div class="flex space-x-3">
-                        <a href="https://github.com/Nserial-killa/Pokedex" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <i class="fab fa-github mr-1"></i> Repositorio
+                    <div class="flex gap-4">
+                        <a href="https://github.com/Nserial-killa/Pokedex" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Repositorio
                         </a>
-
-                        <a href="https://pokedex-three-tau-96.vercel.app/" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <i class="fa-solid fa-eye mr-1 "></i> Sitio Web
+                        <a href="https://pokedex-three-tau-96.vercel.app/" target="_blank" class="project-link">
+                            <i class="fa-solid fa-eye"></i> Sitio Web
                         </a>
-                        
                     </div>
                 </div>
             </div>
 
-
-            <!-- Project 5 -->
-            <div class="project-card rounded-lg overflow-hidden">
-                <div class="bg-gray-700 flex items-center justify-center">
-                    <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                        <source src="/assets/noble-studio-video.mp4" type="video/mp4" />
+            <!-- Proyecto 5: Noble Studio -->
+            <div class="project-card rounded-lg overflow-hidden reveal" style="--reveal-delay: 400ms">
+                <div class="project-media bg-gray-700">
+                    <video autoplay muted loop playsinline>
+                        <source src="/assets/noble-studio-video.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Sitio Web de Negocio</h3>
-                    <p class="text-gray-400 mb-4">Un sitio web para una empresa, con un diseño agradable ymoderno construido con tecnologías como HTML, CSS, JavaScript.</p>
+                    <h3 class="text-xl font-bold mb-2">Sitio Web de Negocio – Noble Studio</h3>
+                    <p class="text-gray-400 mb-4">Sitio corporativo con diseño moderno y agradable construido con HTML, CSS y JavaScript.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">HTML</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">CSS</span>
-                        <span class="bg-gray-700 text-xs text-indigo-400 px-3 py-1 rounded-full">JS</span>
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
                     </div>
-                    <div class="flex space-x-3">
-                        <a href="https://github.com/Nserial-killa/Noble_Studio_web_site#" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <i class="fab fa-github mr-1"></i> Repositorio
+                    <div class="flex gap-4">
+                        <a href="https://github.com/Nserial-killa/Noble_Studio_web_site" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Repositorio
                         </a>
-
-                        <a href="https://noble-studio-web-site.vercel.app/" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                            <i class="fa-solid fa-eye mr-1 "></i> Sitio Web
+                        <a href="https://noble-studio-web-site.vercel.app/" target="_blank" class="project-link">
+                            <i class="fa-solid fa-eye"></i> Sitio Web
                         </a>
-                        
                     </div>
                 </div>
-            </div>
-
-
-
-
-        </div> 
-    </div>
-</section>
-
-<!-- Seccion de habilidades -->
-
-<section id="skills" class="section bg-gray-900">
-
-    <div class="container mx-auto px-6">
-
-        <h2 class="section-title text-3xl font-bold mb-6">Habilidades Técnicas</h2>
-
-        
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-
-            <!-- Porcentaje de lenguajes de programacion -->
-
-            <div>
-
-                <h3 class="text-xl font-semibold mb-6 text-indigo-400 flex justify-between items-center">Lenguajes de Programación</h3>
-
-                <div class="space-y-4">
-
-                    <div>
-
-                        <div class="flex justify-between mb-1">
-
-                            <span>C#</span>
-
-                            <span>80%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 80%"></div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- <div>
-
-                        <div class="flex justify-between mb-1">
-
-                            <span>Java</span>
-
-                            <span>85%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 85%"></div>
-
-                        </div>
-
-                    </div> -->
-
-                    <div>
-
-                        <div class="flex justify-between mb-1 mt-4">
-
-                            <span>JavaScript</span>
-
-                            <span>80%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 80%"></div>
-
-                        </div>
-
-                    </div>
-
-                     <div>
-
-                        <div class="flex justify-between mb-1">
-
-                            <span>HTML</span>
-
-                            <span>75%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 75%"></div>
-
-                        </div> 
-
-                    </div>
-
-                    <div>
-
-                        <div class="flex justify-between mb-1 mt-4">
-
-                            <span>SQL</span>
-
-                            <span>70%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 85%"></div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            
-
-            <!-- Frameworks & Libraries -->
-
-            <div class="mb-12">
-
-                <h3 class="text-xl font-semibold mb-6 text-indigo-400 mt-12" >Frameworks y Librerías</h3>
-
-                <div class="space-y-4">
-
-                    <div>
-
-                        <div class="flex justify-between mb-1">
-
-                            <span>.NET</span>
-
-                            <span>90%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 90%"></div>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <!-- <div class="flex justify-between mb-1">
-
-                            <span>Laravel</span>
-
-                            <span>75%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 75%"></div>
-
-                        </div> -->
-
-                    </div>
-
-                    <!-- <div>
-
-                        <div class="flex justify-between mb-1">
-
-                            <span>React</span>
-
-                            <span>80%</span>
-
-                        </div> -->
-
-                        <!-- <div class="progress-bar">
-
-                            <div class="progress" style="width: 80%"></div>
-
-                        </div> -->
-
-                    </div>
-
-                    <div>
-
-                        <div class="flex justify-between mb-1">
-
-                            <span>Bootstrap</span>
-
-                            <span>85%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 85%"></div>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <div class="flex justify-between mb-1 mt-4">
-
-                            <span>Tailwind CSS</span>
-
-                            <span>80%</span>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div class="progress" style="width: 60%"></div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
         </div>
-
-        
-
-                <!-- Tools -->
-        <div class="min-h-[400px] flex flex-col md:flex-row items-center justify-center gap-12 md:gap-36 px-4">
-
-            <!-- Herramientas -->
-            <div class="w-full md:w-auto">
-
-                <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center md:text-left">
-                    Herramientas
-                </h3>
-
-                <div class="grid grid-cols-1 gap-4">
-
-                    <div class="skill-item flex items-center p-3 rounded-lg">
-                        <i class="fas fa-code-branch text-indigo-500 mr-3"></i>
-                        <span>Git</span>
-                    </div>
-
-                    <div class="skill-item flex items-center p-3 rounded-lg">
-                        <i class="fas fa-terminal text-indigo-500 mr-3"></i>
-                        <span>Visual Studio</span>
-                    </div>
-
-                    <div class="skill-item flex items-center p-3 rounded-lg">
-                        <i class="fas fa-code text-indigo-500 mr-3"></i>
-                        <span>VS Code</span>
-                    </div>
-
-                    <div class="skill-item flex items-center p-3 rounded-lg">
-                        <i class="fas fa-paint-brush text-indigo-500 mr-3"></i>
-                        <span>Canva</span>
-                    </div>
-
-                    <div class="skill-item flex items-center p-3 rounded-lg">
-                        <i class="fas fa-paint-brush text-indigo-500 mr-3"></i>
-                        <span>Figma</span>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Bases de Datos y Otros -->
-            <div class="w-full md:w-auto">
-
-                <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center md:text-left">
-                    Bases de Datos y Otros
-                </h3>
-
-                <div class="grid grid-cols-1 gap-6">
-
-                    <div>
-                        <h4 class="font-medium mb-2">Bases de Datos</h4>
-
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-800 text-sm text-indigo-400 px-3 py-1 rounded-full">
-                                MySQL
-                            </span>
-
-                            <span class="bg-gray-800 text-sm text-indigo-400 px-3 py-1 rounded-full">
-                                SQL Server
-                            </span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="font-medium mb-2">Metodologías</h4>
-
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-800 text-sm text-indigo-400 px-3 py-1 rounded-full">
-                                SCRUM
-                            </span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="font-medium mb-2">Otros Conocimientos</h4>
-
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-800 text-sm text-indigo-400 px-3 py-1 rounded-full">
-                                Linux
-                            </span>
-
-                            <span class="bg-gray-800 text-sm text-indigo-400 px-3 py-1 rounded-full">
-                                UX/UI
-                            </span>
-
-                            <span class="bg-gray-800 text-sm text-indigo-400 px-3 py-1 rounded-full">
-                                MS Office
-                            </span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-</div>
-
     </div>
-
 </section>
 
+
+<!-- =====================================================
+     SECCIÓN HABILIDADES TÉCNICAS
+     Las barras de progreso arrancan en 0% y JS las
+     anima al valor real cuando entran en pantalla.
+     ===================================================== -->
+<section id="skills" class="section bg-gray-900">
+    <div class="container mx-auto px-6">
+        <h2 class="section-title text-3xl font-bold reveal">Habilidades Técnicas</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+            <!-- Lenguajes de programación -->
+            <div class="reveal reveal-left">
+                <h3 class="text-xl font-semibold mb-6 text-indigo-400">Lenguajes de Programación</h3>
+                <div class="space-y-5">
+                    <!-- data-width indica el porcentaje objetivo que JS animará -->
+                    <div>
+                        <div class="flex justify-between mb-2"><span>C#</span><span class="text-indigo-400">80%</span></div>
+                        <div class="progress-bar"><div class="progress" data-width="80"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2"><span>JavaScript</span><span class="text-indigo-400">80%</span></div>
+                        <div class="progress-bar"><div class="progress" data-width="80"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2"><span>HTML / CSS</span><span class="text-indigo-400">75%</span></div>
+                        <div class="progress-bar"><div class="progress" data-width="75"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2"><span>SQL</span><span class="text-indigo-400">70%</span></div>
+                        <div class="progress-bar"><div class="progress" data-width="70"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frameworks y librerías -->
+            <div class="reveal reveal-right">
+                <h3 class="text-xl font-semibold mb-6 text-indigo-400">Frameworks y Librerías</h3>
+                <div class="space-y-5">
+                    
+                    <div>
+                        <div class="flex justify-between mb-2"><span>Bootstrap</span><span class="text-indigo-400">85%</span></div>
+                        <div class="progress-bar"><div class="progress" data-width="85"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2"><span>Tailwind CSS</span><span class="text-indigo-400">80%</span></div>
+                        <div class="progress-bar"><div class="progress" data-width="80"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Herramientas, bases de datos y otros conocimientos -->
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+            <!-- Herramientas de desarrollo -->
+            <div class="reveal" style="--reveal-delay: 0ms">
+                <h3 class="text-xl font-semibold mb-5 text-indigo-400">Herramientas</h3>
+                <div class="space-y-3">
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-code-branch text-indigo-500"></i><span>Git</span>
+                    </div>
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-terminal text-indigo-500"></i><span>Visual Studio</span>
+                    </div>
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-code text-indigo-500"></i><span>VS Code</span>
+                    </div>
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-paint-brush text-indigo-500"></i><span>Canva</span>
+                    </div>
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-vector-square text-indigo-500"></i><span>Figma</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bases de datos -->
+            <div class="reveal" style="--reveal-delay: 150ms">
+                <h3 class="text-xl font-semibold mb-5 text-indigo-400">Bases de Datos</h3>
+                <div class="space-y-3">
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-database text-indigo-500"></i><span>MySQL</span>
+                    </div>
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-server text-indigo-500"></i><span>SQL Server</span>
+                    </div>
+                    <div class="skill-item flex items-center p-3 rounded-lg gap-3">
+                        <i class="fas fa-fire text-indigo-500"></i><span>Firebase</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Otros conocimientos -->
+            <div class="reveal" style="--reveal-delay: 300ms">
+                <h3 class="text-xl font-semibold mb-5 text-indigo-400">Otros Conocimientos</h3>
+                <div class="flex flex-wrap gap-3">
+                    <span class="knowledge-tag">SCRUM</span>
+                    <span class="knowledge-tag">Linux</span>
+                    <span class="knowledge-tag">UX / UI</span>
+                    <span class="knowledge-tag">MS Office</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     SECCIÓN EDUCACIÓN - Línea de tiempo vertical
+     ===================================================== -->
 <section id="education" class="section">
     <div class="container mx-auto px-6">
-        <h2 class="section-title text-3xl font-bold">Educación</h2>
+        <h2 class="section-title text-3xl font-bold reveal">Educación</h2>
+
         <div class="relative">
-            <!-- Timeline Line -->
-            <div class="absolute left-0 md:left-1/2 h-full w-1 bg-indigo-500 transform -translate-x-2"></div>
-            
-            <!-- Education Item 1 -->
-            <div class="relative mb-2">
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10 md:text-right">
-                        <div class="bg-gray-800 p-6 rounded-lg shadow-1g md:ml-6">
-                            <h3 class="text-xl font-bold mb-2">Ingeniería Informática</h3>
+            <!-- Línea vertical central de la timeline -->
+            <div class="absolute left-0 md:left-1/2 top-0 h-full w-0.5 bg-indigo-600 opacity-40 md:-translate-x-1/2"></div>
+
+            <!-- Entrada de educación -->
+            <div class="relative mb-12 reveal">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+
+                    <!-- Tarjeta izquierda con datos del grado -->
+                    <div class="md:w-1/2 md:pr-12 md:text-right">
+                        <div class="timeline-card bg-gray-800 p-6 rounded-lg">
+                            <h3 class="text-xl font-bold mb-1">Ingeniería Informática</h3>
                             <p class="text-indigo-400 mb-2">Universidad Latinoamericana de Ciencia y Tecnología</p>
-                            <p class="text-gray-400">Septiembre 2022 - Diciembre 2026</p>
+                            <p class="text-gray-500 text-sm">Septiembre 2022 – Diciembre 2026</p>
                         </div>
                     </div>
-                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-indigo-500 rounded-full transform -translate-x-1/2 flex items-center justify-center">
-                        <i class="fas fa-graduation-cap text-white"></i>
+
+                    <!-- Ícono central que separa las dos columnas -->
+                    <div class="timeline-icon absolute left-0 md:left-1/2 w-10 h-10 bg-indigo-600 rounded-full md:-translate-x-1/2 flex items-center justify-center z-10">
+                        <i class="fas fa-graduation-cap text-white text-sm"></i>
                     </div>
-                    <div class="md:w-1/2 md:pl-10">
+
+                    <!-- Descripción derecha -->
+                    <div class="md:w-1/2 md:pl-12">
                         <p class="text-gray-300">
-                            Actualmente estoy cursando mi bachillerato en Ingeniería Informática. Durante mis estudios, he adquirido conocimientos sólidos en algoritmos, estructuras de datos, bases de datos, redes y desarrollo y diseño de aplicaciones.
+                            Bachillerato con conocimientos sólidos en algoritmos, estructuras de datos, bases de datos, redes y desarrollo de aplicaciones.
                         </p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Education Item 2 -->
-            <!-- <div class="relative mb-12">
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10 md:text-right order-1 md:order-1">
-                        <p class="text-gray-300">
-                            Realicé un máster especializado en Inteligencia Artificial y Aprendizaje Automático, donde profundicé en técnicas avanzadas de machine learning, procesamiento de lenguaje natural y visión por computador.
-                        </p>
-                    </div>
-                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-indigo-500 rounded-full transform -translate-x-1/2 flex items-center justify-center order-2">
-                        <i class="fas fa-user-graduate text-white"></i>
-                    </div>
-                    <div class="md:w-1/2 md:pl-10 order-3 md:order-3">
-                        <div class="bg-gray-800 p-6 rounded-lg shadow-lg md:mr-6">
-                            <h3 class="text-xl font-bold mb-2">Máster en Inteligencia Artificial</h3>
-                            <p class="text-indigo-400 mb-2">Universidad Tecnológica</p>
-                            <p class="text-gray-400">2022 - 2023</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-             Education Item 3 -->
-            <!-- <div class="relative">
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10 md:text-right">
-                        <div class="bg-gray-800 p-6 rounded-lg shadow-lg md:ml-6">
-                            <h3 class="text-xl font-bold mb-2">Especialización en Desarrollo Web</h3>
-                            <p class="text-indigo-400 mb-2">Instituto Tecnológico</p>
-                            <p class="text-gray-400">2017 - 2018</p>
-                        </div>
-                    </div>
-                    <div class="absolute left-0 md:left-1/2 w-8 h-8 bg-indigo-500 rounded-full transform -translate-x-1/2 flex items-center justify-center">
-                        <i class="fas fa-certificate text-white"></i>
-                    </div>
-                    <div class="md:w-1/2 md:pl-10">
-                        <p class="text-gray-300">
-                            Curso especializado en tecnologías web modernas, incluyendo HTML5, CSS3, JavaScript avanzado, y frameworks como React y Angular. Aprendí a desarrollar aplicaciones web responsivas y accesibles.
-                        </p>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </section>
 
+
+<!-- =====================================================
+     SECCIÓN CERTIFICACIONES
+     ===================================================== -->
 <section id="certifications" class="section bg-gray-900">
     <div class="container mx-auto px-6">
-        <h2 class="section-title text-3xl font-bold">Certificaciones</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 ">
-            <!-- Certification 1 -->
-            <div class="certificate-card rounded-lg overflow-hidden" >
-                <div class="bg-gray-800 flex items-center justify-center">
-                    <img src="/assets/cerficacionLinkedinXms.jpg" alt="certificado_linkedin_x_microsoft" class="max-w-full max-h-full object-contain shadow-md">
+        <h2 class="section-title text-3xl font-bold reveal">Certificaciones</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Certificación: LinkedIn x Microsoft -->
+            <div class="certificate-card rounded-lg overflow-hidden reveal" style="--reveal-delay: 0ms">
+                <div class="certificate-media bg-gray-800">
+                    <img src="/assets/cerficacionLinkedinXms.jpg" alt="Certificado LinkedIn x Microsoft">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2">Fundamentos profesionales del desarrollo de sotfware</h3>
-                    <p class="text-gray-400 mb-4">Certificación que valida habilidades para desarrollar software de manera profesional.</p>
-                    <a href="https://www.linkedin.com/learning/certificates/2988afb5f14d2eaeb058fdc0f8b5315aac160d47de26dee870bf5971634bd834" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                        <i class="fas fa-external-link-alt mr-1"></i> Ver Certificado
+                    <h3 class="text-lg font-bold mb-2">Fundamentos profesionales del desarrollo de software</h3>
+                    <p class="text-gray-400 mb-4">Valida habilidades para desarrollar software de manera profesional.</p>
+                    <a href="https://www.linkedin.com/learning/certificates/2988afb5f14d2eaeb058fdc0f8b5315aac160d47de26dee870bf5971634bd834"
+                       target="_blank" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> Ver Certificado
                     </a>
                 </div>
             </div>
-            
-            <!-- Certification 2
-            <div class="certificate-card rounded-lg overflow-hidden">
-                <div class="h-40 bg-gray-800 flex items-center justify-center p-4">
-                    <svg class="w-16 h-16 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2">AWS Certified Developer - Associate</h3>
-                    <p class="text-gray-400 mb-4">Certificación que demuestra conocimientos en desarrollo y mantenimiento de aplicaciones en AWS.</p>
-                    <a href="#" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                        <i class="fas fa-external-link-alt mr-1"></i> Ver Certificado
-                    </a>
-                </div>
-            </div>
-            
-                Certification 3 
-            <div class="certificate-card rounded-lg overflow-hidden">
-                <div class="h-40 bg-gray-800 flex items-center justify-center p-4">
-                    <svg class="w-16 h-16 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2">Oracle Certified Professional, Java SE Programmer</h3>
-                    <p class="text-gray-400 mb-4">Certificación que valida conocimientos avanzados en programación Java SE.</p>
-                    <a href="#" class="text-indigo-500 hover:text-indigo-400 flex items-center">
-                        <i class="fas fa-external-link-alt mr-1"></i> Ver Certificado
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> -->
-</section>
-<!-- 
-<section id="contact" class="section">
-    <div class="container mx-auto px-6">
-        <h2 class="section-title text-3xl font-bold">Contacto</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div>
-                <p class="text-gray-300 mb-6">
-                    ¿Interesado en trabajar juntos o tienes alguna pregunta? No dudes en contactarme a través de cualquiera de estos medios.
-                </p>
-                <div class="space-y-6">
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4">
-                            <i class="fas fa-envelope text-indigo-500 text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold">Email</h3>
-                            <a href="mailto:tuemail@ejemplo.com" class="text-indigo-400 hover:text-indigo-300">tuemail@ejemplo.com</a>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4">
-                            <i class="fab fa-linkedin-in text-indigo-500 text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold">LinkedIn</h3>
-                            <a href="https://linkedin.com/in/tu-perfil" target="_blank" class="text-indigo-400 hover:text-indigo-300">linkedin.com/in/tu-perfil</a>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4">
-                            <i class="fab fa-github text-indigo-500 text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold">GitHub</h3>
-                            <a href="https://github.com/tu-usuario" target="_blank" class="text-indigo-400 hover:text-indigo-300">github.com/tu-usuario</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <form id="contact-form" class="space-y-6">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Nombre</label>
-                        <input type="text" id="name" name="name" class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" required>
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
-                        <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" required>
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Mensaje</label>
-                        <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" required></textarea>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn-primary w-full py-3 rounded-lg text-white font-medium flex items-center justify-center">
-                            <i class="fas fa-paper-plane mr-2"></i> Enviar Mensaje
-                        </button>
-                    </div>
-                    <p class="text-sm text-gray-400 text-center mt-4">Este es un formulario de demostración. Para implementar la funcionalidad completa, necesitarías un backend.</p>
-                </form>
-            </div>
+
         </div>
     </div>
-</section> -->
+</section>
 
 
-<footer class="bg-gray-900 py-8">
+<!-- =====================================================
+     SECCIÓN CONTACTO
+     El formulario usa Formspree para enviar emails sin
+     necesitar un servidor propio. Pasos para activarlo:
+       1. Crea cuenta gratuita en https://formspree.io
+       2. Crea un formulario nuevo y copia tu endpoint
+       3. Reemplaza "TU_ENDPOINT_AQUI" con ese endpoint
+     ===================================================== -->
+<section id="contact" class="section">
     <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-4 md:mb-0">
-                <a href="#home" class="flex items-center">
-                    <span class="text-indigo-500">&lt;</span>
-                    <span class="mx-1 text-white">Jimmy Cabalceta Alpizar</span>
-                    <span class="text-indigo-500">/&gt;</span>
-                </a>
+        <h2 class="section-title text-3xl font-bold reveal">Contacto</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+            <!-- Links de contacto y redes sociales -->
+            <div class="reveal reveal-left">
+                <p class="text-gray-300 mb-8">
+                    ¿Tienes un proyecto en mente o te gustaría trabajar juntos? Escríbeme y te respondo pronto.
+                </p>
+                <div class="space-y-4">
+
+                    <a href="mailto:jimmycabalz.a.2011@gmail.com" class="contact-info-item flex items-center gap-4">
+                        <div class="contact-icon"><i class="fas fa-envelope text-indigo-400 text-xl"></i></div>
+                        <div>
+                            <p class="font-semibold text-white">Email</p>
+                            <p class="text-indigo-400 text-sm">jimmycabalz.a.2011@gmail.com</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/jimmy-cabalceta-alpizar-7ba2b9251" target="_blank" class="contact-info-item flex items-center gap-4">
+                        <div class="contact-icon"><i class="fab fa-linkedin-in text-indigo-400 text-xl"></i></div>
+                        <div>
+                            <p class="font-semibold text-white">LinkedIn</p>
+                            <p class="text-indigo-400 text-sm">jimmy-cabalceta-alpizar</p>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/Nserial-killa" target="_blank" class="contact-info-item flex items-center gap-4">
+                        <div class="contact-icon"><i class="fab fa-github text-indigo-400 text-xl"></i></div>
+                        <div>
+                            <p class="font-semibold text-white">GitHub</p>
+                            <p class="text-indigo-400 text-sm">github.com/Nserial-killa</p>
+                        </div>
+                    </a>
+
+                </div>
             </div>
+
+            
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+<footer class="bg-gray-900 border-t border-gray-800 py-10">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+
+            <!-- Logo del footer -->
+            <a href="#home" class="logo-text text-lg font-bold">
+                <span class="text-indigo-500">&lt;</span>
+                <span class="text-white">Jimmy Cabalceta Alpizar</span>
+                <span class="text-indigo-500">/&gt;</span>
+            </a>
+
+            <!-- Iconos de redes sociales -->
             <div class="flex space-x-6">
-                <a href="mailto:jimmycabalz.a.2011@gmail.com" id="segundoenvioemail" class="social-icon text-gray-400 hover:text-white">
-                    <i class="fas fa-envelope"></i>
+                <a href="mailto:jimmycabalz.a.2011@gmail.com"
+                   id="segundoenvioemail"
+                   class="social-icon text-gray-400 hover:text-white"
+                   aria-label="Enviar email">
+                    <i class="fas fa-envelope text-xl"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/jimmy-cabalceta-alpizar-7ba2b9251/" target="_blank" class="social-icon text-gray-400 hover:text-white">
-                    <i class="fab fa-linkedin-in"></i>
+                <a href="https://www.linkedin.com/in/jimmy-cabalceta-alpizar-7ba2b9251/"
+                   target="_blank"
+                   class="social-icon text-gray-400 hover:text-white"
+                   aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in text-xl"></i>
                 </a>
-                <a href="https://github.com/neutronHack" target="_blank" class="social-icon text-gray-400 hover:text-white">
-                    <i class="fab fa-github"></i>
+                <a href="https://github.com/Nserial-killa"
+                   target="_blank"
+                   class="social-icon text-gray-400 hover:text-white"
+                   aria-label="GitHub">
+                    <i class="fab fa-github text-xl"></i>
                 </a>
             </div>
         </div>
-        <div class="text-center mt-6">
-            <p class="text-gray-400 text-sm">&copy; <span id="current-year"></span> Jimmy Cabalceta Alpizar. Todos los derechos reservados.</p>
+
+        <!-- El año se inserta automáticamente con JS -->
+        <div class="text-center mt-6 text-gray-500 text-sm">
+            &copy; <span id="current-year"></span> Jimmy Cabalceta Alpizar. Todos los derechos reservados.
         </div>
     </div>
 </footer>
 
 
-<!-- Scroll to Top Button -->
-<div class="scroll-top" id="scroll-top">
+<!-- =====================================================
+     BOTÓN VOLVER ARRIBA
+     JS lo muestra al bajar 400px y lo oculta si subes
+     ===================================================== -->
+<button id="scroll-top" class="scroll-top" aria-label="Volver arriba">
     <i class="fas fa-arrow-up"></i>
-</div>
+</button>
 
 
-
-
-
-    
-    
+<!-- Script al final del body para que el HTML cargue primero -->
 <script src="/js/script.js"></script>
 
 </body>

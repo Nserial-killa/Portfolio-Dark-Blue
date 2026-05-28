@@ -1,190 +1,576 @@
-@media (max-width: 768px) {
-  .mobile_menu {
-    display: none;
-  }
-}
-
-
+/* =====================================================
+   VARIABLES GLOBALES
+   Todos los colores y valores reutilizables del sitio.
+   Cambia --accent para actualizar el color índigo en todo.
+   ===================================================== */
 :root {
-    --primary: #1a1a1a;
-    --secondary: #252525;
-    --accent: #4F46E5;
-    --text: #e0e0e0;
-    --text-secondary: #a0a0a0;
+    --primary:        #1a1a1a;            /* Fondo base del cuerpo */
+    --secondary:      #252525;            /* Fondo de tarjetas */
+    --accent:         #4F46E5;            /* Color índigo principal */
+    --accent-hover:   #4338ca;            /* Índigo más oscuro al pasar el ratón */
+    --accent-glow:    rgba(79,70,229,.4); /* Sombra/brillo de los botones */
+    --text:           #e0e0e0;            /* Texto principal */
+    --text-secondary: #a0a0a0;            /* Texto secundario */
+    --glass-bg:       rgba(15,15,15,.85); /* Fondo semitransparente del navbar */
+    --border-subtle:  rgba(255,255,255,.06);
+    --transition:     0.3s ease;
 }
 
+/* =====================================================
+   RESET Y BASE
+   ===================================================== */
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 80px; /* Compensa el navbar fijo al navegar con anclas */
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--primary);
     color: var(--text);
+    overflow-x: hidden; /* Evita scroll horizontal de elementos que salen al animar */
 }
-
-.section {
-    padding: 5rem 0;
-}
-
-.barranavegacion {
-    position: relative;
-}
-
-.barranavegacion::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: -5px;
-        left: 0;
-        background-color: var(--accent);
-        transition: width 0.3s ease;
-    }
-
-.barranavegacion:hover::after {
-        width: 100%;
-    }
 
 li::marker {
     content: none;
 }
 
+/* =====================================================
+   SECCIONES
+   ===================================================== */
+.section {
+    padding: 5rem 0;
+}
+
+/* Título con línea degradada inferior */
+.section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 3rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 3px;
+    bottom: -12px;
+    left: 0;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 2px;
+}
+
+/* =====================================================
+   NAVBAR CON EFECTO VIDRIO (GLASS)
+   Al cargar la página el fondo es transparente.
+   Cuando el usuario hace scroll, JS añade .scrolled
+   y el fondo aparece con blur (como vidrio esmerilado).
+   ===================================================== */
+.navbar-glass {
+    background: transparent;
+    transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+}
+
+.navbar-glass.scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 1px 20px rgba(0,0,0,.5);
+}
+
+/* Subrayado animado en los enlaces del navbar de escritorio */
+.nav-link {
+    position: relative;
+    transition: color var(--transition);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    transition: width var(--transition);
+}
+
+.nav-link:hover::after {
+    width: 70%;
+}
+
+/* Logo con tipografía monospace y transición de color */
+.logo-text {
+    font-family: 'Courier New', monospace;
+    transition: opacity var(--transition);
+    text-decoration: none;
+}
+
+.logo-text:hover {
+    opacity: 0.8;
+}
+
+/* =====================================================
+   SECCIÓN HERO
+   ===================================================== */
+
+/* Fondo con efecto radial sutil de color índigo */
+.hero-section {
+    background:
+        radial-gradient(ellipse at 15% 50%, rgba(79,70,229,.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 20%, rgba(79,70,229,.08) 0%, transparent 50%),
+        var(--primary);
+}
+
+/* Texto principal del hero entra desde la izquierda */
+.hero-text {
+    animation: fadeInLeft 0.9s ease 0.3s both;
+}
+
+/* Foto del hero entra desde la derecha */
+.hero-profile {
+    animation: fadeInRight 0.9s ease 0.5s both;
+}
+
+/* Nombre con gradiente que se desplaza en bucle */
+.gradient-text {
+    background: linear-gradient(135deg, #818cf8, #4F46E5, #a78bfa, #818cf8);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Cursor parpadeante del efecto typewriter */
+.typewriter-cursor {
+    color: var(--accent);
+    animation: blink 1s step-end infinite;
+    margin-left: 1px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* ---- Foto de perfil ---- */
+
+/* Contenedor flota arriba y abajo en bucle */
+.profile-container {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-16px); }
+}
+
+/* Anillo giratorio con gradiente cónico (capa 2 del perfil) */
+.ring-spin {
+    background: conic-gradient(from 0deg, var(--accent), transparent 40%, transparent 60%, var(--accent));
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ---- Indicador de scroll (mouse animado) ---- */
+.scroll-indicator {
+    opacity: 0;
+    animation: fadeIn 0.8s ease 1.8s forwards;
+}
+
+.scroll-mouse {
+    width: 26px;
+    height: 42px;
+    border: 2px solid rgba(255,255,255,.25);
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    padding-top: 7px;
+}
+
+.scroll-wheel {
+    width: 4px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: scrollWheel 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+    0%   { transform: translateY(0);    opacity: 1; }
+    100% { transform: translateY(14px); opacity: 0; }
+}
+
+/* =====================================================
+   BOTONES
+   ===================================================== */
+.btn-primary {
+    background: var(--accent);
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.btn-outline {
+    border: 2px solid var(--accent);
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-outline:hover {
+    background: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+/* =====================================================
+   TARJETAS DE PROYECTOS
+   ===================================================== */
 .project-card {
-        background-color: var(--secondary);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--secondary);
+    border: 1px solid var(--border-subtle);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(79,70,229,.35);
+    border-color: rgba(79,70,229,.4);
+}
 
- .skill-item {
+/* Contenedor del video o imagen del proyecto */
+.project-media {
+    height: 210px;
+    overflow: hidden;
+}
 
-        background-color: var(--secondary);
+.project-media img,
+.project-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
 
-        transition: transform 0.3s ease;
+/* Zoom sutil en el media al pasar el cursor sobre la tarjeta */
+.project-card:hover .project-media img,
+.project-card:hover .project-media video {
+    transform: scale(1.06);
+}
 
-    }
+/* Etiquetas de tecnologías (C#, .NET, etc.) */
+.tech-tag {
+    background: rgba(79,70,229,.12);
+    border: 1px solid rgba(79,70,229,.3);
+    color: #818cf8;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 9999px;
+    transition: background var(--transition);
+}
 
-    
+.tech-tag:hover {
+    background: rgba(79,70,229,.25);
+}
 
-    .skill-item:hover {
+/* Enlace "Repositorio" / "Sitio Web" dentro de la tarjeta */
+.project-link {
+    color: #818cf8;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color var(--transition), gap var(--transition);
+}
 
-        transform: translateY(-3px);
+.project-link:hover {
+    color: #a5b4fc;
+    gap: 8px;
+}
 
-    }
+/* =====================================================
+   BARRAS DE PROGRESO (HABILIDADES)
+   Las barras comienzan en width: 0%.
+   JS las anima hasta el valor en data-width cuando
+   entran en el viewport (IntersectionObserver).
+   ===================================================== */
+.progress-bar {
+    height: 7px;
+    background: #2a2a2a;
+    border-radius: 4px;
+    overflow: hidden;
+}
 
-    
+.progress {
+    height: 100%;
+    width: 0%;                  /* Parte en 0, JS lo lleva al valor real */
+    background: linear-gradient(90deg, var(--accent), #818cf8);
+    border-radius: 4px;
+    transition: width 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
 
-    .progress-bar {
+/* Brillo deslizante que recorre la barra */
+.progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+    animation: shimmer 2.5s ease-in-out infinite;
+}
 
-        height: 6px;
+@keyframes shimmer {
+    0%   { left: -60%;  }
+    100% { left: 110%; }
+}
 
-        background-color: #333;
+/* Items de herramientas (Git, VS Code, etc.) */
+.skill-item {
+    background: var(--secondary);
+    border: 1px solid var(--border-subtle);
+    transition: transform var(--transition), border-color var(--transition);
+}
 
-        border-radius: 3px;
+.skill-item:hover {
+    transform: translateX(6px);
+    border-color: rgba(79,70,229,.35);
+}
 
-        overflow: hidden;
+/* Etiquetas de conocimientos generales (SCRUM, Linux, etc.) */
+.knowledge-tag {
+    background: var(--secondary);
+    border: 1px solid rgba(79,70,229,.2);
+    color: #818cf8;
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    transition: background var(--transition), transform var(--transition);
+}
 
-    }
+.knowledge-tag:hover {
+    background: rgba(79,70,229,.2);
+    transform: translateY(-2px);
+}
 
-    
+/* =====================================================
+   LÍNEA DE TIEMPO (EDUCACIÓN)
+   ===================================================== */
+.timeline-card {
+    border: 1px solid var(--border-subtle);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
 
-    .progress {
+.timeline-card:hover {
+    border-color: rgba(79,70,229,.4);
+    box-shadow: 0 0 25px rgba(79,70,229,.15);
+}
 
-        height: 100%;
+/* Ícono en el centro de la línea con resplandor */
+.timeline-icon {
+    box-shadow: 0 0 20px rgba(79,70,229,.6);
+}
 
-        background-color: var(--accent);
+/* =====================================================
+   CERTIFICACIONES
+   ===================================================== */
+.certificate-card {
+    background: var(--secondary);
+    border: 1px solid var(--border-subtle);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
 
-        border-radius: 3px;
+.certificate-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,.35);
+}
 
-    }
+.certificate-media {
+    height: 200px;
+    overflow: hidden;
+}
 
-   
-    .social-icon {
-        transition: transform 0.3s ease, color 0.3s ease;
-    }
-    
-    .social-icon:hover {
-        transform: translateY(-3px);
-        color: var(--accent);
-    }
-    
-    .btn-primary {
-        background-color: var(--accent);
-        transition: all 0.3s ease;
-    }
-    
-    .btn-primary:hover {
-        background-color: #4338ca;
-        transform: translateY(-2px);
-    }
-    
-    .section-title {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 2rem;
-    }
-    
-    .section-title::after {
-        content: '';
-        position: absolute;
-        width: 50%;
-        height: 3px;
-        bottom: -10px;
-        left: 0;
-        background-color: var(--accent);
-    }
-    
-    .certificate-card {
-        background-color: var(--secondary);
-        transition: transform 0.3s ease;
-    }
-    
-    .certificate-card:hover {
-        transform: scale(1.03);
-    }
-    
-    #mobile-menu {
-        transition: transform 0.3s ease;
-        transform: translateX(-100%);
-    }
-    
-    #mobile-menu.show {
-        transform: translateX(0);
-    }
-    
-    .typing-text::after {
-        content: '|';
-        animation: blink 1s infinite;
-    }
-    
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
-    
-    .scroll-top {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background-color: var(--accent);
-        color: white;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: 100;
-    }
-    
-    .scroll-top.show {
-        opacity: 1;
-    }
+.certificate-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1rem;
+}
+
+/* =====================================================
+   CONTACTO - ITEMS DE INFO Y FORMULARIO
+   ===================================================== */
+
+/* Tarjeta clickeable de contacto (email, LinkedIn, GitHub) */
+.contact-info-item {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: var(--secondary);
+    border: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.contact-info-item:hover {
+    transform: translateX(6px);
+    border-color: rgba(79,70,229,.4);
+    box-shadow: 0 4px 20px rgba(79,70,229,.12);
+}
+
+/* Círculo con el ícono dentro de cada tarjeta de contacto */
+.contact-icon {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(79,70,229,.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background var(--transition);
+}
+
+.contact-info-item:hover .contact-icon {
+    background: rgba(79,70,229,.25);
+}
+
+/* Campos del formulario de contacto */
+.form-input {
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-input:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(79,70,229,.2);
+}
+
+/* =====================================================
+   ICONOS SOCIALES DEL FOOTER
+   ===================================================== */
+.social-icon {
+    transition: transform var(--transition), color var(--transition);
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    transform: translateY(-5px);
+    color: var(--accent) !important;
+}
+
+/* =====================================================
+   BOTÓN VOLVER ARRIBA
+   Empieza invisible. JS añade .show al bajar 400px.
+   ===================================================== */
+.scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+    z-index: 999;
+}
+
+.scroll-top.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-top:hover {
+    box-shadow: 0 8px 25px var(--accent-glow);
+    transform: translateY(-4px);
+}
+
+/* =====================================================
+   ANIMACIONES DE REVEAL (APARICIÓN AL HACER SCROLL)
+
+   Sistema de tres pasos:
+     1. El elemento empieza invisible (opacity 0) y
+        desplazado (transform).
+     2. IntersectionObserver en JS detecta cuando el
+        elemento entra en pantalla.
+     3. JS añade la clase .revealed → el elemento
+        aparece con una transición suave.
+
+   La variable --reveal-delay permite escalonar
+   tarjetas: style="--reveal-delay: 100ms"
+   ===================================================== */
+
+/* Estado inicial: invisible y desplazado hacia abajo */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Variante: entra deslizándose desde la izquierda */
+.reveal.reveal-left {
+    transform: translateX(-40px);
+}
+
+/* Variante: entra deslizándose desde la derecha */
+.reveal.reveal-right {
+    transform: translateX(40px);
+}
+
+/* Estado final: visible en su posición normal */
+.reveal.revealed {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* =====================================================
+   KEYFRAMES DE ANIMACIONES REUTILIZABLES
+   ===================================================== */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
